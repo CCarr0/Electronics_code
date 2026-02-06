@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+ <title>KB2040 Live Data</title>
+    <script>
+        async function updateData() {
+            try {
+                const response = await fetch('/data');
+                const data = await response.json();
+                document.getElementById('kbdata').innerText = data.value;
+            } catch (err) {
+                console.error("Error fetching data:", err);
+                document.getElementById('kbdata').innerText = "Error fetching data";
+            }
+        }
+
+        // Update every 100ms
+        setInterval(updateData, 100);
+    </script>
+
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+
+
+/* Center entire layout */
+html,body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Horizontal layout: diamond left, arm controls right */
+.control-layout {
+    display: flex;
+    align-items: center;
+    gap: 50px;
+}
+
+/* Diamond layout grid */
+.movement-diamond {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 70px 70px 70px;
+    gap: 10px;
+}
+
+/* General button style */
+.movement-diamond button,
+.arm-controls button {
+    width: 120px;
+    padding: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #ffa2a2;
+    border: 2px solid #000000;
+    transition: background 0.12s ease, transform 0.08s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+body {
+background-image: url('data:image/jpeg;base64,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');
+
+}
+
+/* Active (keyboard pressed or mouse held) */
+.active-btn {
+    background-color: #8dbaff !important;
+    border-color: #000000 !important;
+    transform: translateY(0) scale(0.98);
+}
+
+/* Diamond positions */
+#forward  { grid-column: 2; grid-row: 1; }
+#left     { grid-column: 1; grid-row: 2; }
+#right    { grid-column: 3; grid-row: 2; }
+#backward { grid-column: 2; grid-row: 3; }
+
+/* Arm controls stacked vertically */
+.arm-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+/* Mouse press effect */
+button:active {
+    transform: scale(0.96);
+}
+</style>
+</head>
+
+<body>
+
+<div class="control-layout">
+
+    <!-- Movement Diamond -->
+    <div class="movement-diamond" role="group" aria-label="Movement controls">
+        <button id="forward"  data-cmd="forward">Forward</button>
+        <button id="left"     data-cmd="left">Left</button>
+        <button id="right"    data-cmd="right">Right</button>
+        <button id="backward" data-cmd="backward">Backward</button>
+    </div>
+
+    <!-- Arm Controls -->
+    <div class="arm-controls" role="group" aria-label="Arm controls">
+        <button id="ArmUp"    data-cmd="ArmUp">Arm Up</button>
+        <button id="ArmDown"  data-cmd="ArmDown">Arm Down</button>
+    </div>
+
+</div>
+
+<script>
+/* CONFIG */
+const BASE_URL = "http://10.243.95.149:5000"; // change if needed
+const useNoCors = true; // keep true if server blocks CORS; set false if CORS allowed
+
+/* Helper to send command */
+function sendCmd(cmd) {
+    const url = `${BASE_URL}/${cmd}`;
+    try {
+        fetch(url, { method: "GET", mode: useNoCors ? "no-cors" : "cors" })
+            .catch(e => {
+                // in no-cors mode fetch will often reject; ignore silently
+                // console.debug('fetch error (possibly expected in no-cors):', e);
+            });
+    } catch (e) {
+        // ignore
+    }
+}
+
+/* KEY <-> button mapping and stop command logic */
+const keyMap = {
+    // movement
+    "w": { btnId: "forward",  cmd: "forward",  stopCmd: "stop", type: "move" },
+    "a": { btnId: "left",     cmd: "left",     stopCmd: "stop", type: "move" },
+    "s": { btnId: "backward", cmd: "backward", stopCmd: "stop", type: "move" },
+    "d": { btnId: "right",    cmd: "right",    stopCmd: "stop", type: "move" },
+    // arrows for arm
+    "arrowup":   { btnId: "ArmUp",   cmd: "ArmUp",   stopCmd: "ArmStop", type: "arm" },
+    "arrowdown": { btnId: "ArmDown", cmd: "ArmDown", stopCmd: "ArmStop", type: "arm" }
+};
+
+/* Track currently pressed keys (support multiple keys) */
+const pressed = new Set();
+
+function activateButton(btnId) {
+    const b = document.getElementById(btnId);
+    if (b) b.classList.add("active-btn");
+}
+function deactivateButton(btnId) {
+    const b = document.getElementById(btnId);
+    if (b) b.classList.remove("active-btn");
+}
+
+/* Normalize key representation */
+function normKey(k) {
+    if (!k) return k;
+    return k.toLowerCase();
+}
+
+/* KEYBOARD HANDLING */
+window.addEventListener("keydown", (ev) => {
+    const n = normKey(ev.key);
+
+    // prevent arrows from scrolling page
+    if (n === "arrowup" || n === "arrowdown" || n === "arrowleft" || n === "arrowright" || n === " ") {
+        ev.preventDefault();
+    }
+
+    if (!keyMap[n]) return;
+
+    if (pressed.has(n)) return; // already active
+
+    pressed.add(n);
+    const info = keyMap[n];
+
+    // highlight button
+    activateButton(info.btnId);
+
+    // send start command
+    sendCmd(info.cmd);
+});
+
+window.addEventListener("keyup", (ev) => {
+    const n = normKey(ev.key);
+    if (!keyMap[n]) return;
+    if (!pressed.has(n)) return;
+
+    pressed.delete(n);
+    const info = keyMap[n];
+
+    // send stop for that subsystem
+    sendCmd(info.stopCmd);
+
+    // remove highlight
+    deactivateButton(info.btnId);
+});
+
+/* MOUSE / TOUCH ON-SCREEN BUTTON HANDLING
+   - mousedown/touchstart => start
+   - mouseup/mouseleave/touchend/touchcancel => stop
+*/
+function attachButtonHoldBehavior(btn) {
+    const cmd = btn.dataset.cmd;
+    if (!cmd) return;
+
+    // map dataset cmd to stop command for arm vs move
+    const stopCmd = (cmd === "arm_up" || cmd === "arm_down") ? "arm_stop" : "stop";
+
+    const start = (e) => {
+        e.preventDefault();
+        btn.classList.add("active-btn");
+        sendCmd(cmd);
+    };
+    const end = (e) => {
+        e && e.preventDefault();
+        btn.classList.remove("active-btn");
+        sendCmd(stopCmd);
+    };
+
+    btn.addEventListener("mousedown", start);
+    btn.addEventListener("touchstart", start, {passive:false});
+
+    btn.addEventListener("mouseup", end);
+    btn.addEventListener("mouseleave", end);
+    btn.addEventListener("touchend", end);
+    btn.addEventListener("touchcancel", end);
+}
+
+document.querySelectorAll("button[data-cmd]").forEach(attachButtonHoldBehavior);
+
+/* Optional: when the window loses focus, clear pressed keys and send stops */
+window.addEventListener("blur", () => {
+    // copy keys because we'll modify the set
+    const keys = Array.from(pressed);
+    keys.forEach(k => {
+        const info = keyMap[k];
+        if (info) {
+            sendCmd(info.stopCmd);
+            deactivateButton(info.btnId);
+        }
+        pressed.delete(k);
+    });
+});
+</script>
+
+</body>
+</html>

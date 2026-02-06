@@ -1,0 +1,99 @@
+from flask import Flask, render_template, jsonify
+app = Flask(__name__)
+import serial
+import time
+import threading
+import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BOARD)
+
+@app.route('/forward')
+def forward():
+    GPIO.setup(5, GPIO.OUT)   # like digitalio.DigitalInOut(board.D16)
+    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+
+    GPIO.output(3, GPIO.LOW)
+    GPIO.output(8, GPIO.LOW) # and digitalio.Directio
+    GPIO.output(5, GPIO.HIGH)
+    GPIO.output(10, GPIO.HIGH)
+    return "Forward"
+
+@app.route('/stop')
+def fullstop():
+    GPIO.setup(5, GPIO.OUT)   # like digitalio.DigitalInOut(board.D16)
+    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+
+    GPIO.output(3, GPIO.LOW)
+    GPIO.output(8, GPIO.LOW) # and digitalio.Directio
+    GPIO.output(5, GPIO.LOW)
+    GPIO.output(10, GPIO.LOW)                                  # and digitalio.Directio
+    return "Stopped"
+
+@app.route('/backward')
+def backward():
+    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+
+    GPIO.output(3, GPIO.HIGH)
+    GPIO.output(8, GPIO.HIGH)
+    GPIO.output(5, GPIO.LOW)
+    GPIO.output(10, GPIO.LOW)
+    return "Backward"
+
+@app.route('/left')
+def left():
+    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+
+    GPIO.output(3, GPIO.LOW)
+    GPIO.output(8, GPIO.HIGH)
+    GPIO.output(5, GPIO.HIGH)
+    GPIO.output(10, GPIO.LOW)
+    return "Left"
+
+@app.route('/right')
+def right():
+    GPIO.setup(5, GPIO.OUT)
+    GPIO.setup(10, GPIO.OUT)
+    GPIO.setup(3, GPIO.OUT)
+    GPIO.setup(8, GPIO.OUT)
+
+    GPIO.output(5, GPIO.LOW)
+    GPIO.output(10, GPIO.HIGH)
+    GPIO.output(3, GPIO.HIGH)
+    GPIO.output(8, GPIO.LOW)
+    return "Right"
+
+@app.route('/ArmUp')
+def ArmUp():
+    GPIO.setup(11, GPIO.OUT)
+    GPIO.setup(13, GPIO.OUT)
+
+    GPIO.output(11, GPIO.HIGH)
+    GPIO.output(13, GPIO.LOW)
+    return "ArmUp"
+
+@app.route('/ArmDown')
+def ArmDown():
+    GPIO.setup(11, GPIO.OUT)
+    GPIO.setup(13, GPIO.OUT)
+
+    GPIO.output(11, GPIO.LOW)
+    GPIO.output(13, GPIO.HIGH)
+    return "ArmDown"
+
+@app.route('/ArmStop')
+def ArmStop():
+    GPIO.setup(11,GPIO.OUT)
+    GPIO.setup(13, GPIO.OUT)
+
+    GPIO.output(11, GPIO.LOW)
+    GPIO.output(13, GPIO.LOW)
+    return "Stopped"
